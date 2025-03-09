@@ -1,7 +1,7 @@
 {
   "name": "sudoku",
   "version": "0.1.0",
-  "homepage": "https://boyshot.github.io/sudoku",
+  "homepage": "https://boyshot.github.io/board-sudoku",
   "private": true,
   "dependencies": {
     "cra-template": "1.2.0",
