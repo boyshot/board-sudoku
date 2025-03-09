@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
 function App() {
   const [board, setBoard] = useState(generateEmptyBoard());
@@ -69,7 +69,7 @@ function App() {
   // Função para remover números e criar o puzzle
   function generateSudokuPuzzle() {
     const completeBoard = generateCompleteSudoku();
-    for (let i = 0; i < level; i++) {    
+    for (let i = 0; i < level; i++) {
       zeroDistinctCells(completeBoard);
     }
     return completeBoard;
@@ -85,9 +85,6 @@ function App() {
     }
   }
 
-
-
-
   // Função para lidar com o clique no botão
   const handleGenerateSudoku = () => {
     const newSudoku = generateSudokuPuzzle();
@@ -96,23 +93,47 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Gerador de Sudoku</h1>      
+      <div className="titulo">
+        <a
+          className="link-wikipedia"
+          target="_blank"
+          href="https://pt.wikipedia.org/wiki/Sudoku"
+          rel="noreferrer"
+        >
+          Gerador de Sudoku
+        </a>
+      </div>
       <div className="sudoku-board">
         {board.map((row, rowIndex) => (
           <div key={rowIndex} className="sudoku-row">
             {row.map((cell, colIndex) => (
               <div key={colIndex} className="sudoku-cell">
-                {cell !== 0 ? cell : ''}
+                {cell !== 0 ? cell : ""}
               </div>
             ))}
           </div>
         ))}
       </div>
-      <br></br>
-      <label htmlFor="level">Dificuldade: {level < 40 ? "facil" : level > 40 && level < 51 ? "medio" : "dificil" }</label>
-      <input type="range" min="30" max="60" value={level} onChange={(e) => setLevel(e.target.value)} />
-      <br></br>
-      <button onClick={handleGenerateSudoku}>Novo Sudoku</button>
+      <div className="label-dificuldade">
+        <label htmlFor="level">
+          Dificuldade:{" "}
+          {level < 40
+            ? "fácil"
+            : level > 40 && level < 51
+            ? "médio"
+            : "difícil"}
+        </label>
+        <input
+          type="range"
+          min="30"
+          max="60"
+          value={level}
+          onChange={(e) => setLevel(e.target.value)}
+        />
+      </div>
+      <button className="botao-arredondado" onClick={handleGenerateSudoku}>
+        Novo Sudoku
+      </button>
     </div>
   );
 }

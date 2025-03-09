@@ -38,3 +38,59 @@
     font-size: 16px;
     cursor: pointer;
   }
+
+  .label-dificuldade {
+    display: block;
+    margin-top: 10px;
+  }
+
+  .botao-arredondado {
+    background-color: #007bff; /* Cor azul */
+    color: white; /* Cor do texto */
+    border: none; /* Remove a borda */
+    padding: 10px 20px; /* Espaçamento interno */
+    border-radius: 20px; /* Arredonda as bordas */
+    font-size: 16px; /* Tamanho da fonte */
+    cursor: pointer; /* Muda o cursor para pointer ao passar o mouse */
+    transition: background-color 0.3s ease; /* Transição suave ao passar o mouse */
+  }
+
+.botao-arredondado:hover {
+    background-color: #0056b3; /* Cor azul mais escura ao passar o mouse */
+  }
+
+  .titulo {
+    display: block;
+  }
+
+  .link-wikipedia {
+    color: #007bff; /* Cor azul moderna */
+    text-decoration: none; /* Remove o sublinhado padrão */
+    font-size: 32px; /* Tamanho da fonte */
+    font-family: 'Poppins', sans-serif; /* Fonte moderna */
+    font-weight: 500; /* Peso da fonte */
+    position: relative; /* Para posicionar o sublinhado personalizado */
+    transition: color 0.3s ease; /* Transição suave para a cor do texto */
+}
+
+.link-wikipedia::after {
+    content: ''; /* Cria um pseudo-elemento para o sublinhado */
+    position: absolute; /* Posiciona o sublinhado */
+    left: 0;
+    bottom: -2px; /* Ajusta a posição do sublinhado */
+    width: 100%;
+    height: 2px; /* Espessura do sublinhado */
+    background-color: #007bff; /* Cor do sublinhado */
+    transform: scaleX(0); /* Inicialmente, o sublinhado está invisível */
+    transform-origin: bottom right; /* Direção da animação */
+    transition: transform 0.3s ease; /* Transição suave para o sublinhado */
+}
+
+.link-wikipedia:hover {
+    color: #0056b3; /* Cor mais escura ao passar o mouse */
+}
+
+.link-wikipedia:hover::after {
+    transform: scaleX(1); /* Expande o sublinhado ao passar o mouse */
+    transform-origin: bottom left; /* Direção da animação ao passar o mouse */
+}
