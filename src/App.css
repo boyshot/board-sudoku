@@ -146,6 +146,17 @@
   transform-origin: bottom left;
 }
 
+/* Hidden input for mobile keyboard */
+.hidden-input {
+  position: fixed;
+  opacity: 0;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+  top: 0;
+  left: 0;
+}
+
 /* Win overlay */
 .overlay {
   position: fixed;

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import "./App.css";
 
 function generateEmptyBoard() {
@@ -67,6 +67,7 @@ function App() {
   const [selected, setSelected] = useState(null);
   const [gameWon, setGameWon] = useState(false);
   const [confirmQuit, setConfirmQuit] = useState(false);
+  const hiddenInputRef = useRef(null);
 
   const startNewGame = useCallback((lvl) => {
     const newPuzzle = generatePuzzle(lvl ?? level);
@@ -100,19 +101,35 @@ function App() {
     return true;
   }
 
-  function handleKeyDown(r, c, e) {
+  function handleCellClick(r, c) {
     if (puzzle[r][c] !== 0) return;
-    const key = e.key;
-    if (key >= "1" && key <= "9") {
-      e.preventDefault();
-      const newBoard = userBoard.map(row => [...row]);
-      newBoard[r][c] = parseInt(key);
+    setSelected({ row: r, col: c });
+    if (hiddenInputRef.current) {
+      hiddenInputRef.current.value = "";
+      hiddenInputRef.current.focus();
+    }
+  }
+
+  function handleInput(e) {
+    if (!selected) return;
+    const { row, col } = selected;
+    const val = e.target.value.slice(-1);
+    e.target.value = "";
+    if (val >= "1" && val <= "9") {
+      const newBoard = userBoard.map(r => [...r]);
+      newBoard[row][col] = parseInt(val);
       setUserBoard(newBoard);
       if (checkWin(newBoard)) setGameWon(true);
-    } else if (key === "Backspace" || key === "Delete") {
+    }
+  }
+
+  function handleKeyDown(e) {
+    if (!selected) return;
+    const { row, col } = selected;
+    if (e.key === "Backspace" || e.key === "Delete") {
       e.preventDefault();
-      const newBoard = userBoard.map(row => [...row]);
-      newBoard[r][c] = null;
+      const newBoard = userBoard.map(r => [...r]);
+      newBoard[row][col] = null;
       setUserBoard(newBoard);
     }
   }
@@ -154,10 +171,7 @@ function App() {
                 <div
                   key={c}
                   className={classes}
-                  tabIndex={isFixed ? -1 : 0}
-                  onClick={() => !isFixed && setSelected({ row: r, col: c })}
-                  onFocus={() => !isFixed && setSelected({ row: r, col: c })}
-                  onKeyDown={(e) => handleKeyDown(r, c, e)}
+                  onClick={() => handleCellClick(r, c)}
                 >
                   {cell || ""}
                 </div>
@@ -192,6 +206,17 @@ function App() {
           </div>
         )}
       </div>
+
+      <input
+        ref={hiddenInputRef}
+        type="number"
+        inputMode="numeric"
+        pattern="[1-9]*"
+        className="hidden-input"
+        onInput={handleInput}
+        onKeyDown={handleKeyDown}
+        readOnly={false}
+      />
 
       {gameWon && (
         <div className="overlay">
