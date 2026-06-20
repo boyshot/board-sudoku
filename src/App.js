@@ -101,9 +101,10 @@ function App() {
     return true;
   }
 
-  function handleCellClick(r, c) {
+  function handleCellClick(r, c, el) {
     if (puzzle[r][c] !== 0) return;
     setSelected({ row: r, col: c });
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
     if (hiddenInputRef.current) {
       hiddenInputRef.current.value = "";
       hiddenInputRef.current.focus();
@@ -171,7 +172,7 @@ function App() {
                 <div
                   key={c}
                   className={classes}
-                  onClick={() => handleCellClick(r, c)}
+                  onClick={(e) => handleCellClick(r, c, e.currentTarget)}
                 >
                   {cell || ""}
                 </div>
